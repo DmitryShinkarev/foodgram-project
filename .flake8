@@ -1,0 +1,4 @@
+[flake8]
+exclude = tests, node_modules, migrations, sql, columns, settings, validators, foodgram
+# W503 line break before binary operator
+ignore = F821, W503, E501, E113, E902
