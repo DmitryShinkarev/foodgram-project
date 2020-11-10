@@ -1,6 +1,8 @@
 # foodgram-project
 
 
+![foodgram-project](https://github.com/DmitryShinkarev/foodgram-project/workflows/foodgram-project/badge.svg)
+
 Проект — сайт «Продуктовый помощник»
 
 ### Описание
