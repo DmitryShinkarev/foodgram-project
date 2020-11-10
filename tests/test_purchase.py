@@ -27,7 +27,7 @@ class TestPurchase(TestCase):
         assert response.status_code == 403, \
             'Незалогиненный пользователь не может добавить рецепт в покупки'
         self.client.login(username='user1', password='1234567')
-        response = self.client.post("/api/purchases/", {"id": 2})0
+        response = self.client.post("/api/purchases/", {"id": 2})
         assert response.status_code == 200, \
             'Залогиненный пользователь может добавить рецепт в покупки'
         assert response.data == {'success': True}, \
@@ -45,6 +45,8 @@ class TestPurchase(TestCase):
         self.client.login(username='user1', password='1234567')
         self.client.post('/api/purchases/', {'id': 2})
         assert self.user1.purchases.count() == 1, \
+            'Проверьте, что вы подписаны'
         self.client.delete('/api/purchases/2/')
         assert self.user1.purchases.count() == 0, \
+            'Проверьте, что вы отписались'
 

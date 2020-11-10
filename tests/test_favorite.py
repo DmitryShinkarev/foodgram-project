@@ -28,6 +28,7 @@ class TestFavorite(TestCase):
     def test_follow_favorite(self):
         response = self.client.post("/api/favorites/", {"id": 1})
         assert response.status_code == 403, \
+            'Незалогиненный пользователь не может добавить рецепт в избранное'
         self.client.login(username='user1', password='1234567')
         response = self.client.post("/api/favorites/", {"id": 2})
         assert response.status_code == 200, \
@@ -36,7 +37,7 @@ class TestFavorite(TestCase):
             'В ответе должен быть True при успешном добавлении'
         response = self.client.post("/api/favorites/", {"id": 2})
         assert response.status_code == 200, \
-            'ЗАлогиненный пользователь может добавить не свой рецепт в избранное'
+            'Залогиненный пользователь может добавить не свой рецепт в избранное'
         assert response.data == {'success': False}, \
             'Пользователь не может добавить рецепт в избранное второй раз'
         response = self.client.post("/api/favorites/", {"id": 1})
@@ -47,6 +48,8 @@ class TestFavorite(TestCase):
         self.client.login(username='user1', password='1234567')
         self.client.post('/api/favorites/', {'id': 2})
         assert self.user1.favorites.count() == 1, \
+            'Проверьте, что вы подписаны'
         self.client.delete('/api/favorites/2/')
         assert self.user1.favorites.count() == 0, \
+            'Проверьте, что вы отписались'
 

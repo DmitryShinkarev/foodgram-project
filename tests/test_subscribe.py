@@ -38,5 +38,7 @@ class TestSubscribe(TestCase):
         self.client.login(username='user1', password='1234567')
         self.client.post('/api/subscriptions/', {'id': 2})
         assert self.user1.follower.count() == 1, \
+            'Проверьте, что вы подписаны'
         self.client.delete('/api/subscriptions/2/')
         assert self.user1.follower.count() == 0, \
+            'Проверьте, что вы отписались'
