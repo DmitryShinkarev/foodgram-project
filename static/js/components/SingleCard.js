@@ -7,7 +7,7 @@ class SingleCard extends MainCards{
     _eventUserAuth (e) {
         super._eventUserAuth(e);
         if (this.target && this.target.name === 'purchases') {
-            this._eventPurchases(this.target)
+            this._eventPurchpurchases(this.target)
         }
         if (this.target && this.target.name === 'favorites') {
             this._eventFavorites(this.target);
@@ -19,13 +19,13 @@ class SingleCard extends MainCards{
     _eventUserNotAuth  (e)  {
         super._eventUserAuth(e);
         if (this.target && this.target.name === 'purchases') {
-            this._eventPurchases(this.target)
+            this._eventPurchpurchases(this.target)
         }
     }
     _eventSubscribe  (target)  {
         const authorId = target.closest(this.card).getAttribute('data-author');
         if(target.hasAttribute('data-out')) {
-            this.button.subscribe.addSubscribe(target, authorId)
+            this.button.subscribe.addSubscribe(target,authorId)
         } else {
             this.button.subscribe.removeSubscribe(target,authorId)
         }
@@ -46,7 +46,7 @@ class SingleCard extends MainCards{
         const item = this.target.closest('.single-card__favorite').querySelector('.single-card__favorite-tooltip');
         item.textContent = "Убрать из избранного"
     }
-    _eventPurchases  (target)  {
+    _eventPurchpurchases  (target)  {
         const cardId = target.closest(this.card).getAttribute('data-id');
         if(target.hasAttribute('data-out')) {
             this.button.purchases.addPurchases(target,cardId,this.counter.plusCounter)

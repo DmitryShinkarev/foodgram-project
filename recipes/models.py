@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
+from django.core.validators import MinValueValidator
 
 from .validators import validate_file_size
 
@@ -108,7 +109,7 @@ class IngredientAmount(models.Model):
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name='recipe_amount',
     )
-    amount = models.DecimalField('количество', max_digits=6, decimal_places=1)
+    amount = models.DecimalField('количество', max_digits=6, decimal_places=1, validators=[MinValueValidator(1)])
 
     class Meta:
         verbose_name = 'кол-во ингредиента'

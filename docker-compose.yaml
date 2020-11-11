@@ -10,13 +10,15 @@ services:
     container_name: postgres
     image: "postgres:12.4"
     env_file:
-     - './.env'
+     - './.env.prod'
     volumes:
       - postgres_data:/var/lib/postgresql/data/
   web:
     container_name: foodgram
+    build:
+        context: .
+        dockerfile: Dockerfile
     image: '33389/foodgram:v1.1'
-    build: .
     restart: always
     command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -25,7 +27,7 @@ services:
     expose:
       - 8000
     env_file:
-      - './.env'
+      - './.env.prod'
     depends_on:
       - db
   nginx:

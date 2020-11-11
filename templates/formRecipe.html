@@ -28,6 +28,9 @@
                 <p class="form__label">Теги</p>
                 <div class="form__field-group">
                     <div class="tags">
+                        <div class="hidden">
+                             {{form.tag }}
+                        </div>
                         <div class="tags__item">
                             <input type="checkbox"
                                    name="breakfast"
@@ -94,18 +97,12 @@
             <div class="form__group">
                 <span class="form__label">Загрузить фото</span>
                 <div class="form__field-group">
-                        {{ form.image|addclass:"form__file-button" }}
-                    {% if form.errors %}
-                        {% for error in field.errors %}
-                            <span class="form__error">{{ error|escape }}</span>
-                        {% endfor %}
-                    {% endif %}
+                    {{ form.image|addclass:"form__file-button"  }}
+                    <span class="form__error">{{ error|escape }}</span>
                 </div>
             </div>
             <div class="form__footer">
-                {% block form_button %}
                 <button class="button button_style_blue">Создать рецепт</button>
-                {% endblock %}
             </div>
         </form>
     </div>

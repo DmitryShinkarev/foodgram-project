@@ -38,25 +38,11 @@ def new_recipe(request):
     '''Создание нового рецепта.'''
     if request.method == 'POST':
         form = RecipeForm(request.POST or None, files=request.FILES or None)
-        ingredients = get_ingredients(request)
-        if not ingredients:
-            form.add_error(None, 'Добавьте ингредиенты')
-        elif form.is_valid():
-            recipe = form.save(commit=False)
-            recipe.author = user
-            recipe.save()
-            for ing_name, amount in ingredients.items():
-                ingredient = get_object_or_404(Ingredients, title=ing_name)
-                recipe_ing = RecipeIngredient(
-                    recipe=recipe,
-                    ingredient=ingredient,
-                    amount=amount
-                )
-                recipe_ing.save()
-            form.save_m2m()
-        return redirect('recipes')
-        tags = request.POST.getlist('tag')
-        tags = get_tag(tags)
+        if form.is_valid():
+            success_save = save_recipe(request, form)
+            if success_save == 400:
+                return redirect('page_bad_request')
+            return redirect('recipes')
     else:
         form = RecipeForm(request.POST or None)
         tags = []
@@ -93,25 +79,20 @@ def profile(request, username):
 def recipe_edit(request, recipe_id):
     '''Редактирование рецепта.'''
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    # проверка, что текущий юзер и автор рецепта совпадают
     if request.user != recipe.author:
         return redirect('recipe_view', recipe_id=recipe_id)
     if request.method == 'POST':
         form = RecipeForm(request.POST or None,
                           files=request.FILES or None, instance=recipe)
         if form.is_valid():
-            # удаляем из рецепта предыдущие данные по инредиентам и
-            # их количествам. Так как они заносились не через форму, они
-            # не будут заменяться в форме.
             recipe.ingredient.remove()
             recipe.recipe_amount.all().delete()
             recipe.recipe_tag.all().delete()
-            save_recipe(request, form)
+            success_save = save_recipe(request, form)
+            if success_save == 400:
+                return redirect('page_bad_request')
             return redirect('recipe_view', recipe_id=recipe_id)
-        tags = request.POST.getlist('tag')
-        tags = get_tag(tags)
     else:
-        # нужно вернуть теги из db при запросе GET
         tags_saved = recipe.recipe_tag.values_list('title', flat=True)
         form = RecipeForm(instance=recipe)
         form.fields['tag'].initial = list(tags_saved)
@@ -204,3 +185,8 @@ def page_not_found(request, exception):
 def server_error(request):
     '''Обработчик ошибки 500.'''
     return render(request, "error/500.html", status=500)
+
+@requires_csrf_token
+def page_bad_request(request, exception):
+    '''Обработчик ошибки 400.'''
+    return render(request, "error/400.html", {"path": request.path}, status=400)

@@ -33,8 +33,8 @@ const configButton = {
             text: 'Подписаться на автора'
         },
         active: {
-            class: 'button_style_blue',
-            text: `Отписаться от автора`
+            class: 'button_style_light-blue-outline',
+            text: `<span class="icon-check button__icon"></span> Отписаться от автора`
         }
     }
 }
@@ -53,5 +53,4 @@ const authorRecipeSubscribe = new AuthorRecipe(container_subscribe, '.author-sub
 
 authorRecipe.addEvent();
 authorRecipeSubscribe.addEvent();
-
 

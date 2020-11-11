@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import handler404, handler500
+from django.conf.urls import handler404, handler500, handler400
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_view
@@ -22,12 +22,15 @@ from django.urls import include, path
 
 handler404 = 'recipes.views.page_not_found'
 handler500 = 'recipes.views.server_error'
+handler400 = 'recipes.views.page_bad_request'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about/', include('django.contrib.flatpages.urls')),
     path('auth/', include('users.urls')),
     path('auth/', include([
+        path('login/', auth_view.LoginView.as_view(
+            template_name='authForm.html'), name='login'),
         path('logout/', auth_view.LogoutView.as_view(
             template_name='logged_out.html'), name='logout'),
         path('password_change/', auth_view.PasswordChangeView.as_view(
