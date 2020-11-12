@@ -133,6 +133,5 @@ fixtures.json
 .pytest_cache
 .vscode
 db.sqlite3
-ingredients.json
 media/cache
 media/recipe_images
