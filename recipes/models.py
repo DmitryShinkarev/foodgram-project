@@ -16,6 +16,7 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        # тут все таки оставлю, потому как будет путанница. Я использую двойное название отношений в всех моделях.
         related_name='recipe_author',
         verbose_name='автор рецепта',
     )

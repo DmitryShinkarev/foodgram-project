@@ -129,7 +129,8 @@ dmypy.json
 .pyre/
 
 
-fixtures.json
+# fixtures.json
+dump.sql
 .pytest_cache
 .vscode
 db.sqlite3
