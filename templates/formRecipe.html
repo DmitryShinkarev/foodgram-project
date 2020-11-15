@@ -28,35 +28,23 @@
                 <p class="form__label">Теги</p>
                 <div class="form__field-group">
                     <div class="tags">
-                        <div class="hidden">
-                             {{form.tag }}
-                        </div>
-                        <div class="tags__item">
-                            <input type="checkbox"
-                                   name="breakfast"
-                                   id="id_breakfast"
-                                   class="tags__checkbox tags__checkbox_style_orange"
-                                   {% if 'breakfast' in tags %}checked{% endif %}>
-                            <label for="id_breakfast" class="tags__label">Завтрак</label>
-                        </div>
-                        <div class="tags__item">
-                            <input type="checkbox"
-                                   name="lunch"
-                                   id="id_lunch"
-                                   class="tags__checkbox tags__checkbox_style_green"
-                                   {% if 'lunch' in tags %}checked{% endif %}>
-                            <label for="id_lunch" class="tags__label">Обед</label>
-                        </div>
-                        <div class="tags__item">
-                            <input type="checkbox"
-                                   name="dinner"
-                                   id="id_dinner"
-                                   class="tags__checkbox tags__checkbox_style_purple"
-                                   {% if 'dinner' in tags %}checked{% endif %}>
-                            <label for="id_dinner" class="tags__label">Ужин</label>
-                        </div>
+                        {% for tag_choice in form.tag %}
+                            <div class="tags__item">
+                                <input 
+                                    type="checkbox" 
+                                    name="tag" 
+                                    value = "{{ tag_choice.data.value }}"
+                                    id="id_{{ tag_choice.id_for_lable }}" 
+                                    class="tags__checkbox tags__checkbox_style_{{ tag_choice.choice_label }}">
+                                <label for="id_{{ tag_choice.id_for_lable }}" class="tags__label">{{ tag_choice.data.value }}</label>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <span class="form__error"></span>
+                    {% if form.errors %}
+                        {% for error in form.tag.errors %}
+                            <span class="form__error">{{ error|escape }}</span>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             <div class="form__group">
@@ -68,12 +56,17 @@
                             <div class="form__dropdown-items"></div>
                         </div>
                         <input type="number" id="cantidad" class="form__input" min="0">
-                        <label for="cantidad" class="form__label" id="cantidadVal"></label>
+                        <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                     </div>
-                    <div class="form__field-group-ingredientes-container"></div>
+                    <div class="form__field-group-ingredientes-container">
+                    </div>
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
-                    <span class="form__error"></span>
-                </div>
+                    {% if form.errors %}
+                    {% for error in field.errors %}
+                        <span class="form__error">{{ error|escape }}</span>
+                    {% endfor %}
+                    {% endif %}
+               </div>
             </div>
             <div class="form__group">
                 <label for="{{ form.duration.id_for_label }}" class="form__label">Время приготовления</label>

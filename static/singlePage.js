@@ -4,7 +4,7 @@ const api = new Api(apiUrl);
 const header = new Header(counterId);
 
 const configButton = {
-    purchases: {
+    purchpurachases: {
         attr: 'data-out',
         default: {
             class: 'button_style_blue',
@@ -36,13 +36,13 @@ const configButton = {
         }
     }
 }
-const purchases = new Purchases(configButton.purchases, api);
+const purchpurachases = new Purchpurachases(configButton.purchpurachases, api);
 const favorites = new Favorites(configButton.favorites, api);
 const subscribe = new Subscribe(configButton.subscribe, api);
 
 
 const singleCard = new SingleCard(container, '.single-card', header, api, true,{
-    purchases,
+    purchpurachases,
     favorites,
     subscribe
 });

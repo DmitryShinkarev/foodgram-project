@@ -3,7 +3,7 @@ class Subscribe {
         this.config = config;
         this.api = api;
     }
-    addSubscribe (target, authorId) {
+    addSubscribe (target,authorId) {
         target.setAttribute('disabled', true)
         this.api.addSubscriptions(authorId)
             .then( e => {
@@ -19,7 +19,7 @@ class Subscribe {
                 target.removeAttribute('disabled');
             })
     };
-    removeSubscribe (target, authorId) {
+    removeSubscribe (target,authorId) {
         target.setAttribute('disabled', true)
         this.api.removeSubscriptions(authorId)
             .then( e => {

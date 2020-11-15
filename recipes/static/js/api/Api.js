@@ -117,7 +117,7 @@ removeFavorites (id) {
       })
 }
   getIngredients  (text)  {
-      return fetch(`/api/ingredients?query=${text}/`, {
+      return fetch(`/api/ingredients?search=${text}`, {
           headers: {
               'Content-Type': 'application/json'
           }

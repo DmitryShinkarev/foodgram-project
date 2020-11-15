@@ -7,9 +7,9 @@ class RecipeForm(forms.ModelForm):
     '''Класс формы для создания рецепта.'''
 
     TAG_CHOICES = (
-        ('Завтрак', 'Завтрак'),
-        ('Обед', 'Обед'),
-        ('Ужин', 'Ужин'),
+        ('Завтрак', 'orange'),
+        ('Обед', 'green'),
+        ('Ужин', 'purple'),
     )
 
     title = forms.CharField(max_length=256)
